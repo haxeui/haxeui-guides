@@ -90,7 +90,7 @@ HaxeUI supports a fully feature scripting environment provided via `hscript`. Th
 
 The first slight annoyance is that in `hscript` you have to use fully qualified names since there is no such things as `import` statements. This means to create button dynamically in a HaxeUI `scriptlet` you would have to so something similar along then lines of:
 
-```
+```haxe
 var button = new haxe.ui.components.Button();
 ```
 
