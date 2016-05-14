@@ -2,7 +2,7 @@ Modules
 ================================
 Modules are a fundamental part of HaxeUI. Everything from an application to a library is considered a module in HaxeUI terms. The core of HaxeUI (`haxeui-core`) is itself a module. 
 
-Modules allow you do and configure many things inside and application/library:
+Modules allow you to do and to configure many things inside and application/library:
 
 * Compile resources into an application (as haxe resources)
 * Expose component classes and packages (as well as aliasing them)
