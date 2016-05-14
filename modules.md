@@ -29,7 +29,7 @@ Resources
 -------------------------
 Modules allow you to compile resources directly into your application as haxe resources. This is useful as if you were to share a library you might want to use this feature to make sure that any required resource files would always be available. For example, `haxeui-core` compiles a few small images into the application by default to be used by the default theme. This means that these resources will be available to any and all supported backends without the need for the client application do include them in some framework specific way. 
 
-_Note: from an API perspective you never need to think about if a resource is a haxe resource or a backend specific resource when you use resource in HaxeUI the framework will work out if its a haxe resource or not and automatically convert it into the correct type for the framework that is currently being used._
+_Note: from an API perspective you never need to think about if a resource is a haxe resource or a backend specific resource. When you use resource in HaxeUI the framework will work out if its a haxe resource or not and automatically convert it into the correct type for the framework that is currently being used._
 
 To set-up a module to discover and compile in resources, use the `<resources/>` node. Here is an example from the `haxeui-core` module:
 
