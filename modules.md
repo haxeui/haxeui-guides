@@ -2,7 +2,7 @@ Modules
 ================================
 Modules are a fundamental part of HaxeUI. Everything from an application to a library is considered a module in HaxeUI terms. The core of HaxeUI (`haxeui-core`) is itself a module. 
 
-Modules allow you to do and to configure many things inside and application/library:
+Modules allow you to do and configure many things inside and application/library:
 
 * Compile resources into an application (as haxe resources)
 * Expose component classes and packages (as well as aliasing them)
@@ -13,7 +13,7 @@ Modules allow you to do and to configure many things inside and application/libr
 
 Creation
 -------------------------
-Modules themselves are simply files that contain markup. By default HaxeUI supports xml, json and yaml markup. It is however possible to inject custom parsers into the the module parsing engine should the need arise. 
+Modules themselves are simply files that contain markup. By default HaxeUI supports xml, json and yaml markup. It is but, yet possible to inject custom parsers into the the module parsing engine should the need arise. 
 
 To create a module simply create a file called `module.xml` (this example uses xml) somewhere on your classpath. HaxeUI will automatically find this file and load it as part of its module processing phase.
 
