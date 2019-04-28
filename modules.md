@@ -6,14 +6,13 @@ Modules allow you to do and configure many things inside and application/library
 
 * Compile resources into an application (as haxe resources)
 * Expose component classes and packages (as well as aliasing them)
+* Create component classes from markup (eg: xml) files
 * Set-up which classes scriptlets have access to (and stop them be eliminated by dead code elimination)
 * Create and append to themes
-* Set-up (and override) class level properties
-* Create (and override) animation sequences
 
 Creation
 -------------------------
-Modules themselves are simply files that contain markup. By default HaxeUI supports xml, json and yaml markup. It is but, yet possible to inject custom parsers into the the module parsing engine should the need arise. 
+Modules themselves are simply files that contain markup. By default HaxeUI supports xml. It is, however,  possible to inject custom parsers into the the module parsing engine should the need arise. 
 
 To create a module simply create a file called `module.xml` (this example uses xml) somewhere on your classpath. HaxeUI will automatically find this file and load it as part of its module processing phase.
 
@@ -41,8 +40,8 @@ To set-up a module to discover and compile in resources, use the `<resources/>` 
 
 * `path` specifies where on the classpath to look for resources.
 * `prefix` specifies what name should be added before the resolved resource path
- 
-The resource compilation stage is fully recursive mean all files in all folders will be discovered and added as haxe resources. The prefix is important if you want to make your names a little more user friendly. Assuming you had the following folder structure:
+
+The resource compilation stage is fully recursive meaning all files in all folders will be discovered and added as haxe resources. The prefix is important if you want to make your names a little more user friendly. Assuming you had the following folder structure:
 
 ```
 haxe
@@ -58,10 +57,10 @@ Then you would end up with this resource names:
 
 * haxeui-core/styles/myimage.png
 * haxeui-core/styles/myfolder/myotherimage.png
- 
+
 Components
 -------------------------
-Within HaxeUI its necessary to let the framework know what components should be available to a give application. This is also achieved via modules. It lets the framework know what classes or packages to scan looking for classes that extend `Component` and register them in the component registry. This stage is required mainly to allow for xml (and other mark up) to be used to be build user interfaces. If a component wasnt registered in a module then it is still fully accessible to normal haxe code, it however, wouldnt be available to xml (or markup based) UI definitions. 
+Within HaxeUI its necessary to let the framework know what components should be available to a given application. This is also achieved via modules. It lets the framework know what classes or packages to scan looking for classes that extend `Component` and register them in the component registry. This stage is required mainly to allow for xml (and other mark up) to be used to be build user interfaces. If a component wasnt registered in a module then it is still fully accessible to normal haxe code, it however, wouldnt be available to xml (or markup based) UI definitions. 
 
 To register components, or sets of components with the framework simply use the `<components />` node. Here is an example from the `haxeui-core` module:
 
@@ -83,6 +82,47 @@ _Note: if you specify `package` then `alias` will be ignored and all classes in 
 _Trivia: the static text class `Label` has been aliased in `haxeui-core` in order to ease migration from v1 to v2_ 
 
 Its important to realise that having these classes registered via the module makes no guarantee that they wont be eliminated by dead code elimination if they havent been used in an application.
+
+## Components from XML
+
+It is also possible to create entire custom components from XML alone and a later use them in either markup or in code. This is also achieved by using the `module.xml`:
+
+```xml
+<components>
+	<class file="custom/custom1.xml" alias="CustomAlias" />
+	<class folder="custom" />
+</components>
+```
+
+* `file` specifies an xml file to use when building a custom component class
+* `folder`allows the creation of multiple custom component classes from a folder
+* `alias`for single custom component classes and alias can be specified, if an alias isnt specified then the name of the xml file is used (made into a valid haxe class name)
+
+As an example, suppose you had the following directory structure:
+
+```
+custom
+ |-- sub
+     |-- custom2.xml
+     |-- custom3.xml
+ |-- custom1.xml
+
+```
+
+When this is used with the module configuration above you would end up with 3 new haxe classes (that can be used in code):
+
+* `custom.Custom1`
+* `custom.sub.Custom2`
+* `custom.sub.Custom3`
+
+you would also end up with _four_ entries in the class registry for use with markup (xml):
+
+* `<custom1 />`
+* `<customAlias />`
+* `<custom2 />`
+* `<custom3 />`
+
+There are many ways to create custom components in HaxeUI, this is simply one of them, see "Custom Components" for a more detailed list
 
 Scripting
 -------------------------
@@ -163,46 +203,4 @@ Modules are a good place to create and extend themes that are available to HaxeU
 </themes>
 ```
 
-Properties
--------------------------
-Here is an example from the `haxeui-core` module:
 
-```xml
-<properties>
-	<property name="haxe.ui.components.hslider.animation.pos" value="haxe.ui.components.animation.pos" />
-	<property name="haxe.ui.components.hslider.animation.rangeStart" value="haxe.ui.components.animation.rangeStart" />
-	<property name="haxe.ui.components.hslider.animation.rangeEnd" value="haxe.ui.components.animation.rangeEnd" />
-
-	<property name="haxe.ui.components.vslider.animation.pos" value="haxe.ui.components.animation.pos" />
-	<property name="haxe.ui.components.vslider.animation.rangeStart" value="haxe.ui.components.animation.rangeStart" />
-	<property name="haxe.ui.components.vslider.animation.rangeEnd" value="haxe.ui.components.animation.rangeEnd" />
-		
-	<property name="haxe.ui.components.hscroll.animation.pos" value="haxe.ui.components.animation.pos" />
-	
-	<property name="haxe.ui.components.vscroll.animation.pos" value="haxe.ui.components.animation.pos" />
-</properties>
-```
-
-Animation
--------------------------
-Here is an example from the `haxeui-core` module:
-
-```xml
-<animations>
-	<animation id="haxe.ui.components.animation.pos" ease="Bounce.easeOut">
-		<keyframe time="300">
-			<target pos="{pos}" />
-		</keyframe>
-	</animation>
-	<animation id="haxe.ui.components.animation.rangeStart" ease="Bounce.easeOut">
-		<keyframe time="300">
-			<target rangeStart="{rangeStart}" />
-		</keyframe>
-	</animation>
-	<animation id="haxe.ui.components.animation.rangeEnd" ease="Bounce.easeOut">
-		<keyframe time="300">
-			<target rangeEnd="{rangeEnd}" />
-		</keyframe>
-	</animation>
-</animations>
-```
