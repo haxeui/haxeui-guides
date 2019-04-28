@@ -60,8 +60,8 @@ This custom component class will be fully available for use with haxe code. Howe
 	<components>
     	<component class="custom.MyComponent" alias="SomeAlias" />
         <!-- alternative method for entire package (without aliases)
-		<component package="custom" />
-		-->
+        <component package="custom" />
+        -->
     </components>
 </module>
 ```
@@ -76,7 +76,7 @@ A slight improvement on creating a custom component purely through code is to us
 
 ```xml
 <hbox>
-   	<textfield id="textfield" text="0" />
+    <textfield id="textfield" text="0" />
     <button id="deinc" text="-" />
     <button id="inc" text="+" />
 </hbox>
@@ -113,7 +113,7 @@ A further refinement we can make to the `MyComponent`class is to use a build mac
 
 ```xml
 <hbox>
-   	<textfield id="textfield" text="0" />
+    <textfield id="textfield" text="0" />
     <button id="deinc" text="-" />
     <button id="inc" text="+" />
 </hbox>
@@ -170,7 +170,7 @@ There are two additional parameters that the build macro accepts, the first is a
 
 ```xml
 <hbox>
-   	<textfield id="textfield" text="${startValue}" />
+    <textfield id="textfield" text="${startValue}" />
     <button id="deinc" text="-" />
     <button id="inc" text="+" />
 </hbox>
@@ -189,7 +189,7 @@ Though not hugely useful here its important to note that this can be used in var
 
 ```xml
 <vbox id="container">
-   	<label text="Container ${title}" />
+    <label text="Container ${title}" />
     <import source="${content}" />
 </vbox>
 ```
@@ -216,7 +216,7 @@ Using xml metadata is very similar to using external xml files, with the excepti
 ```haxe
 @:xml('
 <hbox>
-   	<textfield id="textfield" text="0" />
+    <textfield id="textfield" text="0" />
     <button id="deinc" text="-" />
     <button id="inc" text="+" />
 </hbox>
@@ -252,8 +252,8 @@ In order to use this xml file you must allow HaxeUI to know about it, this can b
 	<components>
     	<component file="custom/my-component.xml" alias="SomeAlias" />
         <!-- alternative method for entire package (without aliases)
-		<component folder="custom" />
-		-->
+        <component folder="custom" />
+        -->
     </components>
 </module>
 ```
