@@ -245,7 +245,7 @@ The final way to create custom components is to use _only_ and xml file, that is
 
 ```
 
-In order to use this xml file you must allow HaxeUI to know about it, this can be dont via `module.xml´ similar to the following:
+In order to use this xml file you must allow HaxeUI to know about it, this can be done via `module.xml´ similar to the following:
 
 ```xml
 <module>
