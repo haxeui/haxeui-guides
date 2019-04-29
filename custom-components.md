@@ -109,7 +109,7 @@ Note: exposing this classes using `module.xml`is exactly the same as if you crea
 
 ## Using a build macro
 
-A further refinement we can make to the `MyComponent`class is to use a build macro to build many parts of the class for use and eliminate alot of the boiler plate. Using the exact same xml file:
+A further refinement we can make to the `MyComponent`class is to use a build macro to build many parts of the class for us and eliminate alot of the boiler plate. Using the exact same xml file:
 
 ```xml
 <hbox>
