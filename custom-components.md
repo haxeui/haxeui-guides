@@ -66,7 +66,7 @@ This custom component class will be fully available for use with haxe code. Howe
 </module>
 ```
 
-This component will now be available to xml via `<mycomponent/>` (or `<somealias/>`) if aliasing was used.
+This component will now be available to xml via `<mycomponent/>` (or `<somealias/>` if aliasing was used).
 
 trivia: when using xml in HaxeUI various operations are performed on node names to allow more flexibility and code style. For example, with the component above any of these node names would lead to the `custom.MyComponent`haxe class: `<mycomponent/>`, `<myComponent/>`, `<MyComponent/>`, `<my-component/>`
 
