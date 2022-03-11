@@ -128,7 +128,7 @@ Scripting
 -------------------------
 HaxeUI supports a fully feature scripting environment provided via `hscript`. This can allow very quick debugging and dynamic functionality to an application with ease. Setting up certain configurations in the module can greatly help with basic scripting issues, namely class naming and dead code elimination. 
 
-The first slight annoyance is that in `hscript` you have to use fully qualified names since there is no such things as `import` statements. This means to create button dynamically in a HaxeUI `scriptlet` you would have to so something similar along then lines of:
+The first slight annoyance is that in `hscript` you have to use fully qualified names since there is no such things as `import` statements. This means to create button dynamically in a HaxeUI `scriptlet` you would have to do something similar along then lines of:
 
 ```haxe
 var button = new haxe.ui.components.Button();
