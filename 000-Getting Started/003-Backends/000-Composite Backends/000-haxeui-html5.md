@@ -5,10 +5,6 @@ haxeui-html5 is the pure HTML5 backend for HaxeUI. It has no other framework dep
 
 ![](./_assets/haxeui-html5-preview.png)
 
-_Note: haxeui-html is considered a "hybrid" backend, this is because it can create composite components as well as native components (native to the browser), where they are available, in the same GUI (as pictured below)._
-
-![](./_assets/haxeui-html5-preview_hybrid.png)
-
 ## Installation
 haxeui-html5 has a dependency to haxeui-core, and so that too must be installed. Once haxeui-core is installed, haxeui-html5 can be installed using:
 
@@ -61,31 +57,4 @@ Toolkit.init({
     // where 'Screen' will place components (defaults to the document body)
     container: js.Browser.document.getElementById("myContainer")
 });
-```
-
-## Native components
-
-HTML5 supports various native versions of components, and therefore so does HaxeUI. There are a few different ways to do this:
-
-### Using a theme (applies to all relevant components)
-```haxe
-Toolkit.theme = "native"; // will try to use native components where possible
-```
-
-### Using haxe code (applies to single component)
-```haxe
-var button:Button = new Button();
-button.native = true; // this component alone will be native
-```
-
-### Using an inline style (applies to single component)
-```xml
-<button text="Native" style="native:true;" />
-```
-
-### Using CSS (applies to groups of components)
-```css
-.button, #myNativeButton, .myNativeStyle {
-    native: true;
-}
 ```
