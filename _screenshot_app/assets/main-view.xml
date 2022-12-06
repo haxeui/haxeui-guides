@@ -14,7 +14,7 @@
                             <vbox>
                                 <button text="Button" icon="haxeui-core/styles/default/haxeui.png" iconPosition="top" />
                                 <slider pos="30" minorTicks="5" majorTicks="10" />
-                                <progress pos="70" />
+                                <progress pos="70" width="150" />
                             </vbox>
                             <vbox>
                                 <hbox>
@@ -31,7 +31,7 @@
                                 </hbox>
                                 <frame>
                                     <hbox>
-                                        <button text="Button" style="font-size: 22px; color: blue;" />
+                                        <button text="Button" style="font-size: 24px; color: blue;" />
                                         <label text="label" verticalAlign="center" style="color: red" />
                                     </hbox>
                                 </frame>

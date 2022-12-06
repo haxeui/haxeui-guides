@@ -1,0 +1,11 @@
+-cp src
+-main Main
+
+-lib heaps
+-lib hlsdl
+-lib haxeui-core
+-lib haxeui-heaps
+
+-D resourcesPath=assets
+
+-hl build/heaps/hl/Main.hl
