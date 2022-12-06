@@ -3,7 +3,7 @@ haxeui-heaps
 
 haxeui-heaps is the Heaps backend for HaxeUI.
 
-![](./_assets/haxeui-heaps-preview_no_border.png)
+![](./_assets/haxeui-heaps-preview.png)
 
 ## Installation
 haxeui-heaps has a dependency to haxeui-core, and so that too must be installed. Once haxeui-core is installed, haxeui-heaps can be installed using:

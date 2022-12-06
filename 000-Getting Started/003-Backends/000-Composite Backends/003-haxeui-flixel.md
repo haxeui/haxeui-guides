@@ -3,9 +3,7 @@ haxeui-flixel
 
 haxeui-flixel is the Flixel backend for HaxeUI.
 
-![](./_assets/haxeui-flixel-preview_no_border.png)
-
-_Note: haxeui-flixel comes with a specialised version of the default theme that mainly uses slice-9 bitmaps. This is partially because flixel is optimised to use bitmpas and partially because it fits with already existing flixel UI libraries and coomponents - plus the retro look is pretty cool!_
+![](./_assets/haxeui-flixel-preview.png)
 
 ## Installation
 haxeui-flixel has a dependency to haxeui-core, and so that too must be installed. Once haxeui-core is installed, haxeui-flixel can be installed using:
