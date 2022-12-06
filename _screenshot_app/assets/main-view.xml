@@ -1,0 +1,89 @@
+<vbox style="padding: 0px;" width="650" height="350">
+    <menubar width="100%">
+        <menu text="File" />
+        <menu text="Edit" />
+        <spacer width="100%" />
+        <menu text="About" />
+    </menubar>
+    <vbox style="padding: 8px;" width="100%" height="100%">
+        <tabview width="100%" height="100%" styleName="rounded-tabs">
+            <vbox text="Page 1" icon="haxeui-core/styles/shared/error-small.png" width="100%" height="100%">
+                <hbox width="100%" height="100%">
+                    <scrollview width="100%" height="100%">
+                        <hbox>
+                            <vbox>
+                                <button text="Button" icon="haxeui-core/styles/default/haxeui.png" iconPosition="top" />
+                                <slider pos="30" minorTicks="5" majorTicks="10" />
+                                <progress pos="70" />
+                            </vbox>
+                            <vbox>
+                                <hbox>
+                                    <checkbox selected="true" text="Check" />
+                                    <optionbox selected="true" text="Option" />
+                                </hbox>
+                                <hbox>
+                                    <dropdown>
+                                        <data>
+                                            <item text="Item 1" icon="haxeui-core/styles/default/haxeui_tiny.png" />
+                                        </data>
+                                    </dropdown>
+                                    <number-stepper width="60" pos="1.2" />
+                                </hbox>
+                                <frame>
+                                    <hbox>
+                                        <button text="Button" style="font-size: 22px; color: blue;" />
+                                        <label text="label" verticalAlign="center" style="color: red" />
+                                    </hbox>
+                                </frame>
+                                <hbox>
+                                    <textfield placeholder="Enter text" icon="haxeui-core/styles/shared/warning-small.png" />
+                                </hbox>
+
+                                <grid>
+                                    <button text="Button" />
+                                    <button text="Button" />
+                                    <button text="Button" />
+                                    <button text="Button" />
+                                    <button text="Button" />
+                                    <button text="Button" />
+                                    <button text="Button" />
+                                    <button text="Button" />
+                                    <button text="Button" />
+                                    <button text="Button" />
+                                </grid>
+                            </vbox>
+        
+                            <slider direction="vertical" pos="30" minorTicks="5" majorTicks="10" />
+                            <progress direction="vertical" pos="70" />
+                        </hbox>
+                    </scrollview>
+                    <vbox width="200" height="100%">
+                        <listview width="100%" height="100%" selectedIndex="1">
+                            <item-renderer width="100%" layoutName="horizontal">
+                                <checkbox id="selected" />
+                                <label width="100%" id="text" />
+                            </item-renderer>
+                            <data>
+                                <item text="Item 1" selected="true" />
+                                <item text="Item 2" selected="true" />
+                                <item text="Item 3" selected="false" />
+                                <item text="Item 4" selected="true" />
+                                <item text="Item 5" selected="false" />
+                                <item text="Item 6" selected="true" />
+                                <item text="Item 7" selected="true" />
+                                <item text="Item 8" selected="true" />
+                                <item text="Item 9" selected="true" />
+                            </data>
+                        </listview>
+                        <treeview id="tv1" width="100%" height="100%">
+
+                        </treeview>
+                    </vbox>
+                </hbox>
+            </vbox>
+            <vbox text="Page 2" icon="haxeui-core/styles/shared/help-small.png" />
+            <vbox text="Page 3" icon="haxeui-core/styles/shared/warning-small.png" />
+            <vbox text="Page 4" icon="haxeui-core/styles/shared/info-small.png" />
+        </tabview>
+    </vbox>
+</vbox>
