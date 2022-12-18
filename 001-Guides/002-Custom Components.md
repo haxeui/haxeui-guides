@@ -58,15 +58,15 @@ This custom component class will be fully available for use with haxe code. Howe
 ```xml
 <module>
 	<components>
-    	<component class="custom.MyComponent" alias="SomeAlias" />
-        <!-- alternative method for entire package (without aliases)
+    	<component class="custom.MyComponent" />
+        <!-- alternative method for entire package
         <component package="custom" />
         -->
     </components>
 </module>
 ```
 
-This component will now be available to xml via `<mycomponent/>` (or `<somealias/>` if aliasing was used).
+This component will now be available to xml via `<mycomponent/>`.
 
 trivia: when using xml in HaxeUI various operations are performed on node names to allow more flexibility and code style. For example, with the component above any of these node names would lead to the `custom.MyComponent`haxe class: `<mycomponent/>`, `<myComponent/>`, `<MyComponent/>`, `<my-component/>`
 
@@ -88,7 +88,7 @@ We can then use this xml in a haxe class similar to the following:
 class MyComponent extends HBox {
     public function new() {
         super();
-        var ui = ComponentMacros.buildComponent("assets/my-component.xml");
+        var ui = ComponentBuilder.fromFile("assets/my-component.xml");
         var textfield = ui.findComponent("textfield", TextField);
         ui.findComponent("deinc", Button).onClick = function(e) {
             var n = Std.parseInt(textfield.text) - 1;
@@ -122,7 +122,7 @@ A further refinement we can make to the `MyComponent`class is to use a build mac
 We can now create a custom component using a build macro similar to the following:
 
 ```haxe
-@:build(haxe.ui.macros.ComponentMacros.build("assets/my-component.xml"))
+@:build(haxe.ui.ComponentBuilder.build("assets/my-component.xml"))
 class MyComponent extends HBox {
     public function new() {
         super();
@@ -145,7 +145,7 @@ The most important things to notice here is that we have now removed the need to
 Although not required a further refinement we can make here to remove boilerplate is the use of binding. By using binding metadata we can automatically link up values and events:
 
 ```haxe
-@:build(haxe.ui.macros.ComponentMacros.build("assets/my-component.xml"))
+@:build(haxe.ui.ComponentBuilder.build("assets/my-component.xml"))
 class MyComponent extends HBox {
     @:bind(textfield.text)
     public var textfieldText:String = "10";
@@ -166,7 +166,7 @@ class MyComponent extends HBox {
 
 #### Additional parameters to the build macro
 
-There are two additional parameters that the build macro accepts, the first is an object representing parameters to using with this xml file, and the second is an alias to use (if you wish), for example:
+There is an additional parameter that the build macro accepts which is an object representing parameters to use with this xml file, for example:
 
 ```xml
 <hbox>
@@ -179,7 +179,7 @@ There are two additional parameters that the build macro accepts, the first is a
 This variant of the xml file contains a `startValue` parameter, we can set that by using the following:
 
 ```haxe
-@:build(haxe.ui.macros.ComponentMacros.build("assets/my-component.xml", {startValue: 10}))
+@:build(haxe.ui.ComponentBuilder.build("assets/my-component.xml", {startValue: 10}))
 class MyComponent extends HBox {
     ...
 }
@@ -197,12 +197,12 @@ Though not hugely useful here its important to note that this can be used in var
 This is now a generic container that can have its title and content specified by different classes at compile time, for example:
 
 ```haxe
-@:build(haxe.ui.macros.ComponentMacros.build("container.xml", {title: "container 1", content: "container1.xml"}))
+@:build(haxe.ui.ComponentBuilder.build("container.xml", {title: "container 1", content: "container1.xml"}))
 class Container1 extends VBox {
 	...       
 }
 
-@:build(haxe.ui.macros.ComponentMacros.build("container.xml", {title: "container 2", content: "container2.xml"}))
+@:build(haxe.ui.ComponentBuilder.build("container.xml", {title: "container 2", content: "container2.xml"}))
 class Container2 extends VBox {
 	...       
 }
@@ -250,14 +250,14 @@ In order to use this xml file you must allow HaxeUI to know about it, this can b
 ```xml
 <module>
 	<components>
-    	<component file="custom/my-component.xml" alias="SomeAlias" />
-        <!-- alternative method for entire package (without aliases)
+    	<component file="custom/my-component.xml" />
+        <!-- alternative method for entire package 
         <component folder="custom" />
         -->
     </components>
 </module>
 ```
 
-This component class will now be available using both code and markup, when using via code it would be `custom.MyComponent` and when using via markup with would simply be `<mycomponent />` (as well as `<somealias/>` if aliasing was used)
+This component class will now be available using both code and markup, when using via code it would be `custom.MyComponent` and when using via markup with would simply be `<mycomponent />`
 
 More information about this, and modules in general, can be found in the "Modules" sections

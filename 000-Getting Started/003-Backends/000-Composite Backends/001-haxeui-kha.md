@@ -50,7 +50,7 @@ class Main {
                 haxe.ui.Toolkit.init();
 
                 final screen = haxe.ui.core.Screen.instance;
-                final ui = haxe.ui.macros.ComponentMacros.buildComponent("ui.xml");
+                final ui = haxe.ui.ComponentBuilder.fromFile("ui.xml");
 
                 screen.addComponent(ui);
 
