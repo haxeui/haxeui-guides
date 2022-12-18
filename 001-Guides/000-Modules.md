@@ -110,7 +110,7 @@ When this is used with the module configuration above you would end up with 3 ne
 * `custom.sub.Custom2`
 * `custom.sub.Custom3`
 
-you would also end up with _four_ entries in the class registry for use with markup (xml):
+you would also end up with three entries in the class registry for use with markup (xml):
 
 * `<custom1 />`
 * `<custom2 />`
