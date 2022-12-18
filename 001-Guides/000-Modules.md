@@ -5,7 +5,7 @@ Modules are a fundamental part of HaxeUI. Everything from an application to a li
 Modules allow you to do and configure many things inside and application/library:
 
 * Compile resources into an application (as haxe resources)
-* Expose component classes and packages (as well as aliasing them)
+* Expose component classes and packages
 * Create component classes from markup (eg: xml) files
 * Set-up which classes scriptlets have access to (and stop them be eliminated by dead code elimination)
 * Create and append to themes
@@ -69,17 +69,13 @@ To register components, or sets of components with the framework simply use the 
 	<class name="haxe.ui.core.Component" />
 	<class package="haxe.ui.components" />
 	<class package="haxe.ui.containers" />
-	<class name="haxe.ui.components.Label" alias="text" />
+	<class name="haxe.ui.components.Label"/>
 </components>
 ```
 
 * `name` specifies which class is extended from `Component`
 * `package` specifies an entire package to scan
-* `alias` specifies what name to use in the component registry, if this is omitted then the class name is used (made lower case)
 
-_Note: if you specify `package` then `alias` will be ignored and all classes in the package that are descendants of `Component` will be registered using their lower-case class name_
-
-_Trivia: the static text class `Label` has been aliased in `haxeui-core` in order to ease migration from v1 to v2_ 
 
 Its important to realise that having these classes registered via the module makes no guarantee that they wont be eliminated by dead code elimination if they havent been used in an application.
 
@@ -89,14 +85,13 @@ It is also possible to create entire custom components from XML alone and a late
 
 ```xml
 <components>
-	<class file="custom/custom1.xml" alias="CustomAlias" />
+	<class file="custom/custom1.xml" />
 	<class folder="custom" />
 </components>
 ```
 
 * `file` specifies an xml file to use when building a custom component class
 * `folder`allows the creation of multiple custom component classes from a folder
-* `alias`for single custom component classes and alias can be specified, if an alias isnt specified then the name of the xml file is used (made into a valid haxe class name)
 
 As an example, suppose you had the following directory structure:
 
@@ -118,7 +113,6 @@ When this is used with the module configuration above you would end up with 3 ne
 you would also end up with _four_ entries in the class registry for use with markup (xml):
 
 * `<custom1 />`
-* `<customAlias />`
 * `<custom2 />`
 * `<custom3 />`
 

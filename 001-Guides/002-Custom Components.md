@@ -58,15 +58,15 @@ This custom component class will be fully available for use with haxe code. Howe
 ```xml
 <module>
 	<components>
-    	<component class="custom.MyComponent" alias="SomeAlias" />
-        <!-- alternative method for entire package (without aliases)
+    	<component class="custom.MyComponent" />
+        <!-- alternative method for entire package
         <component package="custom" />
         -->
     </components>
 </module>
 ```
 
-This component will now be available to xml via `<mycomponent/>` (or `<somealias/>` if aliasing was used).
+This component will now be available to xml via `<mycomponent/>`.
 
 trivia: when using xml in HaxeUI various operations are performed on node names to allow more flexibility and code style. For example, with the component above any of these node names would lead to the `custom.MyComponent`haxe class: `<mycomponent/>`, `<myComponent/>`, `<MyComponent/>`, `<my-component/>`
 
@@ -166,7 +166,7 @@ class MyComponent extends HBox {
 
 #### Additional parameters to the build macro
 
-There are two additional parameters that the build macro accepts, the first is an object representing parameters to using with this xml file, and the second is an alias to use (if you wish), for example:
+There is an additional parameter that the build macro accepts which is an object representing parameters to use with this xml file, for example:
 
 ```xml
 <hbox>
@@ -250,14 +250,14 @@ In order to use this xml file you must allow HaxeUI to know about it, this can b
 ```xml
 <module>
 	<components>
-    	<component file="custom/my-component.xml" alias="SomeAlias" />
-        <!-- alternative method for entire package (without aliases)
+    	<component file="custom/my-component.xml" />
+        <!-- alternative method for entire package 
         <component folder="custom" />
         -->
     </components>
 </module>
 ```
 
-This component class will now be available using both code and markup, when using via code it would be `custom.MyComponent` and when using via markup with would simply be `<mycomponent />` (as well as `<somealias/>` if aliasing was used)
+This component class will now be available using both code and markup, when using via code it would be `custom.MyComponent` and when using via markup with would simply be `<mycomponent />`
 
 More information about this, and modules in general, can be found in the "Modules" sections
