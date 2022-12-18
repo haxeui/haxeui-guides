@@ -6,7 +6,7 @@ In general getting HaxeUI to work with one of the supported backends is fairly t
 
 * Install `haxeui-core`
 * Install haxeui backend library
-* Install dependancies of backend libary
+* Install dependencies of backend library
 
 Haxelib itself should handle these steps for you. They are only listed here for completeness. 
 
@@ -24,5 +24,9 @@ NME       | haxeui-nme       | nme                  | Desktop, Mobile, Browser
 OpenFL    | haxeui-openfl    | openfl, lime         | Desktop, Mobile, Browser
 PixiJS    | haxeui-pixi      | pixijs               | Browser
 hxWidgets | haxeui-hxwidgets | hxWidgets, wxWidgets | Desktop **
+Raylib    | haxeui-raylib    | raylib-haxe          | Desktop
+Heaps     | haxeui-heaps     | heaps                | Desktop, Mobile, Browser
+PDCurses  | haxeui-pdcurses  |                      | Desktop
+Flixel    | haxeui-flixel    | flixel               | Desktop, Mobile, Browser
 
 ** Produces OS native components
