@@ -88,7 +88,7 @@ We can then use this xml in a haxe class similar to the following:
 class MyComponent extends HBox {
     public function new() {
         super();
-        var ui = ComponentMacros.buildComponent("assets/my-component.xml");
+        var ui = ComponentBuilder.fromFile("assets/my-component.xml");
         var textfield = ui.findComponent("textfield", TextField);
         ui.findComponent("deinc", Button).onClick = function(e) {
             var n = Std.parseInt(textfield.text) - 1;
@@ -122,7 +122,7 @@ A further refinement we can make to the `MyComponent`class is to use a build mac
 We can now create a custom component using a build macro similar to the following:
 
 ```haxe
-@:build(haxe.ui.macros.ComponentMacros.build("assets/my-component.xml"))
+@:build(haxe.ui.ComponentBuilder.build("assets/my-component.xml"))
 class MyComponent extends HBox {
     public function new() {
         super();
@@ -145,7 +145,7 @@ The most important things to notice here is that we have now removed the need to
 Although not required a further refinement we can make here to remove boilerplate is the use of binding. By using binding metadata we can automatically link up values and events:
 
 ```haxe
-@:build(haxe.ui.macros.ComponentMacros.build("assets/my-component.xml"))
+@:build(haxe.ui.ComponentBuilder.build("assets/my-component.xml"))
 class MyComponent extends HBox {
     @:bind(textfield.text)
     public var textfieldText:String = "10";
@@ -179,7 +179,7 @@ There are two additional parameters that the build macro accepts, the first is a
 This variant of the xml file contains a `startValue` parameter, we can set that by using the following:
 
 ```haxe
-@:build(haxe.ui.macros.ComponentMacros.build("assets/my-component.xml", {startValue: 10}))
+@:build(haxe.ui.ComponentBuilder.build("assets/my-component.xml", {startValue: 10}))
 class MyComponent extends HBox {
     ...
 }
@@ -197,12 +197,12 @@ Though not hugely useful here its important to note that this can be used in var
 This is now a generic container that can have its title and content specified by different classes at compile time, for example:
 
 ```haxe
-@:build(haxe.ui.macros.ComponentMacros.build("container.xml", {title: "container 1", content: "container1.xml"}))
+@:build(haxe.ui.ComponentBuilder.build("container.xml", {title: "container 1", content: "container1.xml"}))
 class Container1 extends VBox {
 	...       
 }
 
-@:build(haxe.ui.macros.ComponentMacros.build("container.xml", {title: "container 2", content: "container2.xml"}))
+@:build(haxe.ui.ComponentBuilder.build("container.xml", {title: "container 2", content: "container2.xml"}))
 class Container2 extends VBox {
 	...       
 }

@@ -91,7 +91,7 @@ Components can also be added using regular haxe code, although its perfectly acc
 
 ```haxe
 app.ready(function() {
-    var mainView:Component = ComponentMacros.buildComponent("assets/main-view.xml");
+    var mainView:Component = ComponentBuilder.fromFile("assets/main-view.xml");
     app.addComponent(mainView);
 
     var hbox = new HBox();
