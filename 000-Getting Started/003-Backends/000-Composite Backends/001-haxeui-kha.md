@@ -13,7 +13,7 @@ haxelib install haxeui-kha
 ```
 
 ### Kha
-haxeui-kha also has a dependancy on Kha, this can be installed in an empty directory via git using the following commands:
+haxeui-kha also has a dependency on Kha, this can be installed in an empty directory via git using the following commands:
 
 ```
 git init

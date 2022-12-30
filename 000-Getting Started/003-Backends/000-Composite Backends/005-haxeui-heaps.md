@@ -13,7 +13,7 @@ haxelib install haxeui-heaps
 ```
 
 ### Heaps
-haxeui-openfl also has a dependancy on Heaps, this can be installed via haxelib using the following command:
+haxeui-heaps also has a dependency on Heaps, this can be installed via haxelib using the following command:
 
 ```
 haxelib install heaps

@@ -14,7 +14,7 @@ haxelib install haxeui-nme
 ```
 
 ### NME
-haxeui-nme also has a dependancy on NME, this can be installed via haxelib using the following commands:
+haxeui-nme also has a dependency on NME, this can be installed via haxelib using the following commands:
 
 ```
 haxelib install nme

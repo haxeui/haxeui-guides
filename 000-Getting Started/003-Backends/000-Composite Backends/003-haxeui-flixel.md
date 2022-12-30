@@ -13,7 +13,7 @@ haxelib install haxeui-flixel
 ```
 
 ### OpenFL
-HaxeFlixel itself is built ontop of OpenFL and is therefore a depenancy that must be installed and setup, this can be done via haxelib using the following commands:
+HaxeFlixel itself is built ontop of OpenFL and is therefore a dependency that must be installed and setup, this can be done via haxelib using the following commands:
 
 ```
 haxelib install openfl

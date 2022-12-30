@@ -9,7 +9,7 @@ haxeui-hxwidgets is the wxWidgets backend for HaxeUI. It produces a GUI that is 
 ![](./_assets/haxeui-hxwidgets-preview_ubuntu.png)
 
 ## Installation
-haxeui-hxwidgets has a number of dependancies since it produces native components via the wxWidgets library.
+haxeui-hxwidgets has a number of dependencies since it produces native components via the wxWidgets library.
 
 ### wxWidgets
 wxWidgets is a C++ library that lets developers create applications for Windows, macOS, Linux and other platforms with a single code base. This is the library that haxeui-hxwidgets uses to create native components (via its haxe externs hxWidgets).
@@ -34,11 +34,17 @@ brew install wxwidgets
 ### wxWidgets - Linux
 wxWidgets can be installed on debian/ubuntu with:
 
+debian/ubuntu 20.04 (or later):
+```
+apt-get install libwxgtk3.0-gtk3-dev libwxbase3.0-dev libwxgtk-webview3.0-gtk3-dev
+```
+
+debian/ubuntu (older versions):
 ```
 apt-get install libwxgtk3.0-dev libwxbase3.0-dev libwxgtk-webview3.0-dev
 ```
 
-_Important: while using the packaged wxWidgets on OSX and Linux may suffice they are often fairly out of date and can cause various problems both visually and during complilation. Its usually better to build directly from source, for these platforms this is described below._
+_Important: while using the packaged wxWidgets on OSX and Linux may suffice they are often fairly out of date and can cause various problems both visually and during compilation. Its usually better to build directly from source, for these platforms this is described below._
 
 ### wxWidgets - Building From Source (OSX & Linux)
 Often it is useful to have the most up-to-date version of wxWidgets running on a Linux or OSX system, to do this follow these steps:

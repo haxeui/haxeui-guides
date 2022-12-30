@@ -164,7 +164,7 @@ The haxe utility classes `Std` and `Math` will now be available for use inside e
 
 _Note: dead code elimination also applies to helper classes and so these are also marked as `keep`_
 
-For compleness the following listing shows how things are configured by default via the `haxeui-core` module:
+For completeness the following listing shows how things are configured by default via the `haxeui-core` module:
 
 ```xml
 <scriptlets>

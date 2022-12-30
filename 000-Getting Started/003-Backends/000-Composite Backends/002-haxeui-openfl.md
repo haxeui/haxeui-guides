@@ -13,7 +13,7 @@ haxelib install haxeui-openfl
 ```
 
 ### OpenFL
-haxeui-openfl also has a dependancy on OpenFL, this can be installed via haxelib using the following commands:
+haxeui-openfl also has a dependency on OpenFL, this can be installed via haxelib using the following commands:
 
 ```
 haxelib install openfl
