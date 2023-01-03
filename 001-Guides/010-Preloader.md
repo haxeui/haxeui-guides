@@ -6,7 +6,7 @@ Technically, preloader is just a simple component displayed while the app loads.
 
 By default, HaxeUI preloader is a simple label:
 
-TODO: Image here
+![image](https://user-images.githubusercontent.com/16256911/210350723-d77b7dfb-c65a-4fe8-87dd-bf02804a0ca6.png)
 
 Preloaded modules
 -------------------------
@@ -47,20 +47,57 @@ class DefaultPreloader extends Preloader
 To achieve more complex behaviour depending on what stage the loading phase is in, a developer may override some of the [parent's methods](http://haxeui.org/api/haxe/ui/preloader/):
 
 ```haxe
-TODO: More complex example
+import haxe.ui.Preloader;
+
+@:xml('
+    <preloader width="100%" height="100%">
+        <vbox width="100%" verticalAlign="center">
+            <image resource="assets/preloader.gif" horizontalAlign="center" />
+            <label id="progressLabel" horizontalAlign="center" />
+        </vbox>
+    </preloader>
+')
+class DefaultPreloader extends Preloader 
+{
+    override public function complete() 
+    {
+        trace("Loading complete, removing preloader");
+        super.complete();
+        trace("Preloader removed");
+    }   
+    
+    override public function increment() 
+    {
+        trace("Progress incremented");
+        super.increment();
+    }     
+    
+    override public function progress(current:Int, max:Int) 
+    {
+        super.progress(current, max);
+        progressLabel.text = 'Loading: $current/$max';
+    }    
+    
+    public function new() 
+    {
+        super();
+    }    
+}
 ```
 
-`complete()` is invoked when ...TODO...
+`progress()` is invoked on any loading progress change. **In most of the cases, this is the only method you'll need to override.**
 
-`increment()` is invoked when ...TODO...
+`complete()` is invoked when the loading is finished. In the original implementation, it consists of a single line responsible for removing the preloader from the screen. You may override this method if you'll need some additional cleanup before or after the preloader is removed.
 
-`progress()` is invoked when ...TODO...
+`increment()` is invoked when the current loading progress is increased by 1. Under the hood, it consists of the `progress()` call, so there's no much sense in overriding it.
 
 Lastly, to assign the newly created custom preloader to an app, a developer should just change the `preloaderClass` property of an app:
 
 ```haxe
-class Main {
-    public static function main() {
+class Main 
+{
+    public static function main() 
+    {
         var app = new HaxeUIApp();
         app.preloaderClass = DefaultPreloader; //Note that its value should be equal to a class of our custom preloader
         app.ready(() -> {
