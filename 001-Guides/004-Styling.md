@@ -1,10 +1,10 @@
 Styling
 =======
 
-Sizing : the basics
+Sizing
 -------------------
 
-### Default : Autosizing
+### Autosizing
 
 By default, components size to their children, that's what we call *autosizing* For example
 
@@ -16,7 +16,7 @@ By default, components size to their children, that's what we call *autosizing* 
 
 ![](_assets/styling_autosized_vbox.png)
 
-You notice that the vbox has taken the size of the label. ( The label has the size of the text)
+You'll notice that the vbox has taken the size of the label. (The label has the size of the text)
 
 ### Using specific size
 
@@ -66,13 +66,13 @@ It doesn't need to be pixels
 
 ![](_assets/styling_buttons_percent.png)
 
-Notice how the third box seems buggy, it's because the button is 50% of the vbox which doesn't have size. Be attentive, you will have this effect at least once.
+Notice how the third box seems buggy, it's because the button is 50% of the vbox which doesn't have size (and therefore is *autosized*). Be careful, you'll likely cause this in your own layouts at least once by giving children a percent size of parent whose size cant be calculated. 
 
-The button "button 50%" in the second vbox works, because the vbox took his size from the "button 100px".
+The button "button 50%" in the second vbox works, because the *autosized* vbox took its size from the "button 100px".
 
-**TRICK** : having children components of the same size
+### Having children components of the same size
 
-usually if you want a box with 3 buttons of the same size you would do
+Usually if you want a box with 3 buttons of the same size you would do:
 
 ```xml
 <hbox width="400">
@@ -82,7 +82,7 @@ usually if you want a box with 3 buttons of the same size you would do
 </hbox>
 ```
 
-But what if you add a fourth one, you would have to change all the size
+But what if you add a fourth one, you would have to change all the sizes
 
 ```xml
 <hbox width="400">
@@ -93,11 +93,11 @@ But what if you add a fourth one, you would have to change all the size
 </hbox>
 ```
 
-This is quite bug prone, and if you add dynamically buttons makes the code quite complicate.
+This is quite bug prone, and if you dynamically add buttons it makes the code quite complicated.
 
 ![](_assets/styling_buttons_100.png)
 
-So here 's a trick, you will have the same result having every child at 100%
+The best way to achieve this is to mark all components as 100% - HaxeUI will then caculate the appropriate size for each one.
 
 ```xml
 <hbox width="400">
@@ -107,6 +107,8 @@ So here 's a trick, you will have the same result having every child at 100%
     <button text="oh forgot this one" width="100%"/>
 </hbox>
 ```
+
+**Note**: you can also have fixed sized components there too, HaxeUI will calculate the sizes based on the *remaining* available space. 
 
 Creating styles with CSS
 ------------------------
@@ -123,11 +125,11 @@ First, let's learn the basics about CSS
 }
 ```
 
-As you can see the **selector start with dot**
+As you can see the **selector starts with dot**
 
 <b>.component</b> signifies the component name or a component with a specific style name
 
-In context :
+In context:
 
 ```xml
 <vbox style="padding: 5px;">
@@ -147,23 +149,23 @@ In context :
 
 ```css
 .hbox .button {
-    color: red
+    color: red;
 }
 ```
 
-The two dotted selector are  separated by a space.  <b> .component .child </b>It means that it will apply to a component descended ( a child)  from a component with a  stylename button
+The two dotted selectors are separated by a space (**.component .child**). This means that first any component with `hbox` style will be matched, and then any other component that is a child of that match with a `button` style. 
 
 ```xml
 <vbox style="padding: 5px;">
     <style>
         .hbox .button {
-	    color: red
+	    color: red;
         }
     </style>
     <hbox>
         <button text="My parent is an hbox so I'm red" />
     </hbox>
-        <button text="My parent is not a hbox, so I'm still black"/>
+    <button text="My parent is not a hbox, so I'm still black"/>
     <hbox>
         <vbox>
             <vbox>
@@ -174,23 +176,25 @@ The two dotted selector are  separated by a space.  <b> .component .child </b>It
 </vbox>
 ```
 
+**Note**: there is no limit to the number of items you can match in a rule tree - and the style names dont have to be directly related. 
+
 ![](_assets/styling_css_selectors.png)
 
 #### Non Spaced selectors
 
 ```css
 .button.angry {
-    color: red
+    color: red;
 }
 ```
 
-Two dotted selector without separation. .name1.name2 means  an element that has both class
+Two dotted selectors without separation (**.name1.name2**) means the component must have both style names.
 
 ```xml
 <vbox style="padding: 5px;">
     <style>
         .button.angry {
-            color: red
+            color: red;
         }
     </style>
     <button text="I am an angry button therefore I'm red" styleName="angry"/>
@@ -215,15 +219,15 @@ You can use the hashtag when referencing a component with the given Id
 <vbox style="padding: 5px;">
     <style>
         #buttonRed {
-            color: red
+            color: red;
         }
 
         #buttonBlue {
-	    color: blue
+	    color: blue;
         }
 
-        #buttonGreen{
-	    color: green
+        #buttonGreen {
+	    color: green;
         }
     </style>
     <button id="buttonRed" text="My name is buttonRed!" />
@@ -244,7 +248,7 @@ You can use the hashtag when referencing a component with the given Id
 
 ```
 
-">" is used only for direct children ( sons, not grandsons).
+">" is used only for direct children (children, not grandchildren).
 It means that it will apply to the direct child button of a vbox.
 
 ```xml
@@ -262,7 +266,15 @@ It means that it will apply to the direct child button of a vbox.
         </vbox>
     </vbox>
 </vbox>
+```
 
+#### Mixing it all together
+
+Its worth mentioning that all of the above rules can be used together in order to create very tight (or very expansive) rules to select, and therefore style, groups of components. The following is perfectly valid (although somewhat contrived):
+
+```css
+#myComponent .vbox > .hbox .foo > .bar .myStyle#someId .bar.foo .something:hover {
+}
 ```
 
 You can see some explanations here https://community.haxeui.org/t/css-operator-addition/266
