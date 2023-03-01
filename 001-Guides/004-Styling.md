@@ -268,6 +268,11 @@ It means that it will apply to the direct child button of a vbox.
 </vbox>
 ```
 
+![](_assets/styling_css_direct_child.png)
+
+You can see some explanations here https://community.haxeui.org/t/css-operator-addition/266
+
+
 #### Mixing it all together
 
 Its worth mentioning that all of the above rules can be used together in order to create very tight (or very expansive) rules to select, and therefore style, groups of components. The following is perfectly valid (although somewhat contrived):
@@ -277,5 +282,3 @@ Its worth mentioning that all of the above rules can be used together in order t
 }
 ```
 
-You can see some explanations here https://community.haxeui.org/t/css-operator-addition/266
-![](_assets/styling_css_direct_child.png)
