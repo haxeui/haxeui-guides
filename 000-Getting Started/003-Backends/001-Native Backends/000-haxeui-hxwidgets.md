@@ -236,7 +236,7 @@ If you want a menubar to be easily accessible with shortcuts for menu,  you can 
 </menu> 
 ```
 
-Now you can do `Alt+f` to open the menu.
+Now you can do `Alt+F` to open the menu.
 On hxWidgets, the shortcutText will also automatically be binded to a menuitem selection.
 So in this case, you can do `Ctrl+P`
 
