@@ -248,4 +248,4 @@ It makes it more difficult to create two options boxes separated by a button, fo
 
 ### UIEvent.SHOWN
 
-Doesn't work as well as in other platforms.
+Doesn't work as well as in other backends.
