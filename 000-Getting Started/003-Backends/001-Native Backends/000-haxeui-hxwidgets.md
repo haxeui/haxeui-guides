@@ -226,14 +226,17 @@ To nave a different style for each platform, you can use in the css:
 | haxeui_hxwidgets_ignorescroll_sizes |                                                               |
 | haxeui_emulate_dbl_click            |                                                               |
 
-### Menubars
+### Menubar
 
-If you want a menubar to be easily accessible with shortcuts for menu,  you can put a "&" before the letter
+If you want a menubar to be easily accessible with shortcuts for menu,  you can put a "&" before the letter you want the shortcut to use.
 
 ```xml
-<menu text="&amp;File" > 
-    <menuitem id ="open_player" text="Open Player" shortcutText="Ctrl+P" />
-</menu> 
+<menubar>
+    <menu text="&amp;File" > 
+        <menuitem id ="open_player" text="Open Player" shortcutText="Ctrl+P" />
+    </menu>
+    <menu text="F&amp;ollow" > 
+</menubar>
 ```
 
 Now you can do `Alt+F` to open the menu.
