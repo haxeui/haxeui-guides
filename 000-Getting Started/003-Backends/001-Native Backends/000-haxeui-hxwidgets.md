@@ -231,7 +231,7 @@ To nave a different style for each platform, you can use in the css:
 If you want a menubar to be easily accessible with shortcuts for menu,  you can put a "&" before the letter
 
 ```xml
-<menu text="&File" > 
+<menu text="&amp;File" > 
     <menuitem id ="open_player" text="Open Player" shortcutText="Ctrl+P" />
 </menu> 
 ```
