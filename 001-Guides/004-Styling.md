@@ -410,3 +410,175 @@ myComponent.styleSheet.parse("...")
 ```
 
 It enables to parse some style sheets at runtime.
+
+Layouts
+-------
+
+A layout is what enables to control position and dimension of children components.
+
+Core layouts for boxes:
+
+* default
+* absolute
+* vertical
+* horizontal
+* grid
+
+But some components do also have a layout when on a composite backend, because they are composite components, they are made of other components : for example steppers have also a "classic" layout.
+
+#### How to set layouts
+
+##### By xml
+
+```xml
+<box layout="absolute">
+</box>
+```
+
+##### By using styles or CSS
+
+```css
+#my_box {
+    layout:absolute;
+}
+```
+
+##### By code
+
+#### Absolute Layout
+
+![](_assets/styling_absolute_layout.png)
+
+You can check it on the [builder](https://haxeui.org/explorer/#layouts/absolute_layouts)
+
+
+```xml
+<box layout="absolute">
+</box>
+```
+
+An **Absolute** is a special component, it is a box  with an absolute layout. So you can also do :
+
+```xml
+<absolute>
+</absolute>
+```
+
+The position of the child component depends on :
+
+* **top**
+* **left**
+
+TIP : if you want to set a child to the "bottom" or to the "right". You can use a default layout instead and use this [trick](#emulating-an-absolute-bottom-or-right)
+
+#### Default
+
+You can check it on the [builder](https://haxeui.org/explorer/#layouts/box_layouts)
+
+The position of the child component depends on :
+
+* **padding**
+* **vertical-align**
+* **horizontal-align**
+* **margin**
+
+##### Emulating an absolute bottom or right
+
+```xml
+<button text="I can emulate 'bottom' and 'right' using alignment and margin."  width="120" horizontalAlign="right"  verticalAlign="bottom" style="margin-right:30;margin-bottom:30"/>
+```
+
+#### Horizontal
+
+
+You can check it on the [builder](https://haxeui.org/explorer/#layouts/horizonal_layouts)
+
+A **HBox** is a special component, it is a box  with a horizontal layout. So you can also do :
+
+```xml
+<hbox>
+</hbox>
+```
+
+The position of the child component depends on :
+
+* **padding**
+* **vertical-align**
+* **index of child**
+* **horizontal spacing**
+* **margin**
+
+#### Vertical
+
+You can check it on the [builder](https://haxeui.org/explorer/#layouts/vertical_layouts)
+
+A **VBox** is a special component, it is a box with a vertical layout. So you can also do :
+
+```xml
+<vbox>
+</vbox>
+```
+
+The position of the child component depends on :
+
+* **padding**
+* **horizontal-align**
+* **index of child**
+* **vertical spacing**
+* **margin**
+
+#### Grid
+
+
+You can check it on the [builder](https://haxeui.org/explorer/#layouts/grid_layouts)
+
+A **Grid** is a special component, it is a box with a vertical grid layout. So you can also do :
+
+```xml
+<grid>
+</grid>
+```
+
+The position of the child component depends on :
+
+* **padding**
+* **horizontal-align**
+* **vertical-align**
+* **index of child**
+* **number of columns**
+* **spacing**
+* **margin**
+
+Attributes description
+----------------------
+
+### Layout attributes
+
+#### Spacing
+
+Spacing is the spacing between a container's children.
+It is used by vbox, hbox, grid.
+
+![](_assets/styling_spacing.png)
+
+spacing
+
+```css
+.no-spacing {
+    spacing:0; /* both horizontal spacing and vertical spacing will be set to O;
+}
+```
+
+horizontal-spacing
+
+```css
+.spacing {
+    horizontal-spacing:20;
+    vertical-spacing:40;
+    /* you can also do  spacing: %horizontal %vertical
+    spacing:20 40;
+    */
+}
+```
+
+### Styling attributes
