@@ -272,6 +272,49 @@ It means that it will apply to the direct child button of a vbox.
 
 You can see some explanations here https://community.haxeui.org/t/css-operator-addition/266
 
+#### ":" pseudo-classes
+
+":" is used to apply the style only if some external factors happen.
+
+For example "hover" happens when the mouse is moved over the component.
+
+```css
+.button:hover {
+    color:red;
+}
+```
+
+#### "*" to match every element
+
+```css
+* {
+    font-name: 'assets/fonts/main.ttf';
+}
+```
+
+#### "," to use multiple rules
+
+You can also use apply styles to multiple rules by using a comma
+
+```css
+
+/* instead of doing this
+.label {
+    font-size: 13px;
+}
+.textfield{
+    font-size: 13px;
+}
+.textarea {
+    font-size: 13px;
+}
+
+*/
+/* you can do this */
+.label, .textfield, .textarea {
+    font-size: 13px;
+}
+```
 
 #### Mixing it all together
 
