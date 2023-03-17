@@ -272,6 +272,49 @@ It means that it will apply to the direct child button of a vbox.
 
 You can see some explanations here https://community.haxeui.org/t/css-operator-addition/266
 
+#### ":" pseudo-classes
+
+":" is used to apply the style only if some external factors happen.
+
+For example "hover" happens when the mouse is moved over the component.
+
+```css
+.button:hover {
+    color:red;
+}
+```
+
+#### "*" to match every element
+
+```css
+* {
+    font-name: 'assets/fonts/main.ttf';
+}
+```
+
+#### "," to use multiple rules
+
+You can also use apply styles to multiple rules by using a comma
+
+```css
+
+/* instead of doing this
+.label {
+    font-size: 13px;
+}
+.textfield{
+    font-size: 13px;
+}
+.textarea {
+    font-size: 13px;
+}
+
+*/
+/* you can do this */
+.label, .textfield, .textarea {
+    font-size: 13px;
+}
+```
 
 #### Mixing it all together
 
@@ -282,3 +325,260 @@ Its worth mentioning that all of the above rules can be used together in order t
 }
 ```
 
+### Using CSS inside a XML Layout
+
+There are multiple ways to use CSS inside a XML Layout
+
+#### Using the **style** tag
+
+This is a way used in most examples in this guide. It enables quick prototyping, and makes it easy to use in the builder.
+
+```xml
+<vbox width="150">
+	<style>
+		.myStyle{
+			color: #FF0000;
+			fontSize: 20;
+		}
+	</style>
+	<button text="Button" width="100%" styleName="myStyle" />
+</vbox>
+```
+
+Important! The style tag will apply not only inside the vbox but everywhere, it has a global scope by default.
+
+You can still have a local scope using <style scope="local">
+
+**Style scope example**
+
+```xml
+<vbox style="padding: 5px;">
+<style>
+.dress {
+    background-color:red;
+}
+</style>
+<button text="I ordered a red dress but it seems yellow... I wonder why?" styleName="dress"/>
+<vbox>
+<style>
+.dress {
+    background-color:yellow;
+}
+</style>
+<button  text="Haha, I overrode your order! Yellow dresses for everyone!"  styleName="dress"/>
+</vbox>
+<vbox>
+<style scope="local">
+.dress {
+    background-color:aqua;
+}
+</style>
+<button text="I like to tailor my own dresses" styleName="dress"/>
+</vbox>
+</vbox>
+```
+
+![](_assets/styling_scope.png)
+
+#### Using the style attribute
+
+This is a way used in most examples in this guide. It enables quick prototyping, and makes it easy to use in the builder. It is okay for simple styles. It will also have the highest priority.
+
+```xml
+<button text="Click Me!" onclick="this.text='Thanks!'" style="font-size: 24px;" />
+```
+
+### Using CSS in a separate file
+
+You need to configure the path to the .css in the module.xml
+
+```xml
+<themes>
+    <default>
+        <style resource="style/custom.css" />
+    </default>
+</themes>
+```
+
+The advantages are that it easier to make themes. That you can use syntax highlighting etc in your ide.
+
+### Applying a CSS stylesheet via code
+
+```haxe
+myComponent.styleSheet = new StyleSheet();
+myComponent.styleSheet.parse("...")
+```
+
+It enables to parse some style sheets at runtime.
+
+Layouts
+-------
+
+A layout is what enables to control position and dimension of children components.
+
+Core layouts for boxes:
+
+* default
+* absolute
+* vertical
+* horizontal
+* grid
+
+But some components do also have a layout when on a composite backend, because they are composite components, they are made of other components : for example steppers have also a "classic" layout.
+
+#### How to set layouts
+
+##### By xml
+
+```xml
+<box layout="absolute">
+</box>
+```
+
+##### By using styles or CSS
+
+```css
+#my_box {
+    layout:absolute;
+}
+```
+
+##### By code
+
+#### Absolute Layout
+
+![](_assets/styling_absolute_layout.png)
+
+You can check it on the [builder](https://haxeui.org/explorer/#layouts/absolute_layouts)
+
+
+```xml
+<box layout="absolute">
+</box>
+```
+
+An **Absolute** is a special component, it is a box  with an absolute layout. So you can also do :
+
+```xml
+<absolute>
+</absolute>
+```
+
+The position of the child component depends on :
+
+* **top**
+* **left**
+
+TIP : if you want to set a child to the "bottom" or to the "right". You can use a default layout instead and use this [trick](#emulating-an-absolute-bottom-or-right)
+
+#### Default
+
+You can check it on the [builder](https://haxeui.org/explorer/#layouts/box_layouts)
+
+The position of the child component depends on :
+
+* **padding**
+* **vertical-align**
+* **horizontal-align**
+* **margin**
+
+##### Emulating an absolute bottom or right
+
+```xml
+<button text="I can emulate 'bottom' and 'right' using alignment and margin."  width="120" horizontalAlign="right"  verticalAlign="bottom" style="margin-right:30;margin-bottom:30"/>
+```
+
+#### Horizontal
+
+
+You can check it on the [builder](https://haxeui.org/explorer/#layouts/horizonal_layouts)
+
+A **HBox** is a special component, it is a box  with a horizontal layout. So you can also do :
+
+```xml
+<hbox>
+</hbox>
+```
+
+The position of the child component depends on :
+
+* **padding**
+* **vertical-align**
+* **index of child**
+* **horizontal spacing**
+* **margin**
+
+#### Vertical
+
+You can check it on the [builder](https://haxeui.org/explorer/#layouts/vertical_layouts)
+
+A **VBox** is a special component, it is a box with a vertical layout. So you can also do :
+
+```xml
+<vbox>
+</vbox>
+```
+
+The position of the child component depends on :
+
+* **padding**
+* **horizontal-align**
+* **index of child**
+* **vertical spacing**
+* **margin**
+
+#### Grid
+
+
+You can check it on the [builder](https://haxeui.org/explorer/#layouts/grid_layouts)
+
+A **Grid** is a special component, it is a box with a vertical grid layout. So you can also do :
+
+```xml
+<grid>
+</grid>
+```
+
+The position of the child component depends on :
+
+* **padding**
+* **horizontal-align**
+* **vertical-align**
+* **index of child**
+* **number of columns**
+* **spacing**
+* **margin**
+
+Attributes description
+----------------------
+
+### Layout attributes
+
+#### Spacing
+
+Spacing is the spacing between a container's children.
+It is used by vbox, hbox, grid.
+
+![](_assets/styling_spacing.png)
+
+spacing
+
+```css
+.no-spacing {
+    spacing:0; /* both horizontal spacing and vertical spacing will be set to O;
+}
+```
+
+horizontal-spacing
+
+```css
+.spacing {
+    horizontal-spacing:20;
+    vertical-spacing:40;
+    /* you can also do  spacing: %horizontal %vertical
+    spacing:20 40;
+    */
+}
+```
+
+### Styling attributes
