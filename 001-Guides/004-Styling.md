@@ -325,3 +325,88 @@ Its worth mentioning that all of the above rules can be used together in order t
 }
 ```
 
+### Using CSS inside a XML Layout
+
+There are multiple ways to use CSS inside a XML Layout
+
+#### Using the **style** tag
+
+This is a way used in most examples in this guide. It enables quick prototyping, and makes it easy to use in the builder.
+
+```xml
+<vbox width="150">
+	<style>
+		.myStyle{
+			color: #FF0000;
+			fontSize: 20;
+		}
+	</style>
+	<button text="Button" width="100%" styleName="myStyle" />
+</vbox>
+```
+
+Important! The style tag will apply not only inside the vbox but everywhere, it has a global scope by default.
+
+You can still have a local scope using <style scope="local">
+
+**Style scope example**
+
+```xml
+<vbox style="padding: 5px;">
+<style>
+.dress {
+    background-color:red;
+}
+</style>
+<button text="I ordered a red dress but it seems yellow... I wonder why?" styleName="dress"/>
+<vbox>
+<style>
+.dress {
+    background-color:yellow;
+}
+</style>
+<button  text="Haha, I overrode your order! Yellow dresses for everyone!"  styleName="dress"/>
+</vbox>
+<vbox>
+<style scope="local">
+.dress {
+    background-color:aqua;
+}
+</style>
+<button text="I like to tailor my own dresses" styleName="dress"/>
+</vbox>
+</vbox>
+```
+
+![](_assets/styling_scope.png)
+
+#### Using the style attribute
+
+This is a way used in most examples in this guide. It enables quick prototyping, and makes it easy to use in the builder. It is okay for simple styles. It will also have the highest priority.
+
+```xml
+<button text="Click Me!" onclick="this.text='Thanks!'" style="font-size: 24px;" />
+```
+
+### Using CSS in a separate file
+
+You need to configure the path to the .css in the module.xml
+
+```xml
+<themes>
+    <default>
+        <style resource="style/custom.css" />
+    </default>
+</themes>
+```
+
+The advantages are that it easier to make themes. That you can use syntax highlighting etc in your ide.
+
+### Applying a CSS stylesheet via code
+
+```haxe
+myComponent.styleSheet = new StyleSheet();
+myComponent.styleSheet.parse("...")
+```
+
+It enables to parse some style sheets at runtime.
