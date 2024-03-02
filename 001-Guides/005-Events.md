@@ -1,2 +1,258 @@
 Events
 ================================
+
+
+An event is a signal that the system fires to tell something has occured. Code can be written to listen to this signal and act on it.
+
+There are many types of events, here are a few examples:
+- it can be mouse event, the user has clicked a component
+- it can be a UI event, a component has been shown
+- it can be keyboard event, something has been typed
+- and many others
+
+Haxe-ui provides multiple easy ways to listen to these events. 
+
+## Listening to events
+
+
+### The XML way
+
+Using xml, it is easy to listen to events. For example:
+
+```xml
+<vbox style="padding: 5px;">
+<box width="400" height="500" backgroundColor="red" onClick="trace('you clicked on red');"/>
+</vbox>
+```
+
+will trace something if you click on the red box.
+
+
+Let's look at the actual  code produced by haxeui
+
+```haxe
+c0.registerEvent("click", function(event:haxe.ui.events.UIEvent) {
+    var __this__ = c0;
+    {
+        `trace("you clicked on red", {fileName : "src/MainView.hx", lineNumber : 6, className : "MainView", methodName : "new"});
+    };
+});
+```
+
+What does it teaches us  ?
+
+First thing, to listen to an event, you just have to know the event name, and do `on`+ the name of the event type.
+`onclick`, `onClick`, `onCLICK` all work.
+
+This work for any events `onShown`, `onReady`, etc also work
+
+Second thing, is that you have also access to the event instance, by using the `event` variable.
+
+```xml
+<vbox style="padding: 5px;">
+<box width="400" height="500" backgroundColor="red" onClick="trace(event);"/>
+</vbox>
+```
+
+
+### In Code
+
+#### Using the macro "@:bind"
+
+You can use the macro bind, which is quite convenient
+
+`@:bind(component, event)`
+
+```haxe
+@:bind(button, MouseEvent.CLICK)
+function onClickButton(_) {
+    trace("you've just clicked on the button");
+}
+```
+
+let's look at the produced haxe code
+
+```haxe
+public function new() {
+    var _gthis = this;
+    super();
+    [...]
+    var c = this.button;
+    if ((c != null)) c.registerEvent(haxe.ui.events.MouseEvent.CLICK, this.onClickButton) else `trace("WARNING: could not find component to register event (" + "this" + ")", {fileName : "src/MainView.hx", lineNumber : 12, className : "MainView", methodName : "new"});
+
+```
+
+You can use multiple binds before a function
+```haxe
+@:bind(button, MouseEvent.CLICK)
+@:bind(button1, MouseEvent.CLICK)
+function onClickButton(_) {
+    trace("you've just clicked on some button");
+}
+```
+
+
+You can actually bind an event to whatever component you can access in the class which exist at the creation of the component so `this` or `button`.
+You cannot access `parentComponent` for example, because the parentComponent is set when the component is added to its parent, which is after the creation  of the component.
+
+```haxe
+@:bind(this, MouseEvent.CLICK)
+function onClickButton(_) {
+    trace("you've just clicked me");
+}
+```
+
+This brings on to the registerEvent method 
+
+#### Using the register event method
+
+To register events to a component you can use directly the haxe function `registerEvent`.
+
+Here is the definition
+
+```haxe
+registerEvent<T:UIEvent>(type:EventType<T>, listener:T->Void, priority:Int = 0)
+```
+
+Using directly the function enables us to set the priority parameter which is useful when registering multiple time the same events
+
+```haxe
+registerEvent(haxe.ui.events.MouseEvent.CLICK, function(e){trace("written second");}, 88);
+registerEvent(haxe.ui.events.MouseEvent.CLICK, function(e){trace("written first");}, 888);
+```
+
+Or to make an event happen before the default haxui behaviour.
+
+The bigger the number, the higher the priority.
+
+
+Using the function makes it more natural to also unregisterEvents.
+
+```haxe
+registerEvent(haxe.ui.events.MouseEvent.CLICK, doStuff, 888);
+unregisterEvent(haxe.ui.events.MouseEvent.CLICK, doStuff);
+```
+
+You don't  need to unregister events. *Events are automatically unregistered when the components are destroyed.*
+
+But if you only use once the type of event, and want to register and unregister multiple times a function, better to use a convenience property.
+
+#### Using the convenience properties
+
+Components have convenience properties for most used events.
+
+`onChange`
+
+`onClick`
+`onMouseOver`
+`onMouseOut`
+`onDblClick`
+`onRightClick`
+
+`onDragStart`
+`onDrag`
+`onDragEnd`
+`onAnimationStart`
+`onAnimationFrame`
+`onAnimationEnd`
+
+The make it easy to change functions to trigger without having to unregister the event
+
+```haxe
+onClick = function(e) {
+    // do stuff;
+    onClick = function(e) {
+        // do different stuff now
+    }
+}
+
+
+```
+
+#### Overriding functions 
+
+
+There is also another way to change default events of a component.
+Simply by overriding the registered called functions.
+
+For example,
+
+```haxe
+public override function onReady() {
+        super.onReady();
+        // do stuff
+}
+```
+
+You can also the same for  `onInitialize()`, `onResized()` and others depending on the component
+
+```
+
+## Type of events
+
+There are many events that are generated by haxeui. Let's look at some of some them
+
+
+### UI Events
+
+UI events are usually attached to a component
+
+#### CHANGE
+
+A `change` event is dispatched when the value of the component has changed.
+
+#### READY
+
+A `ready` event is dispatched when the value when size is calculated
+
+#### RESIZE
+
+A `resize` event is dispatched when the value of the component has been resized.
+
+#### DESTROY
+#### INITIALIZE
+#### MOVE
+#### HIDDEN
+#### SHOWN
+#### ENABLED
+#### DISABLED
+#### COMPONENT_ADDED
+#### COMPONENT_REMOVED
+#### COMPONENT_ADDED_TO_PARENT
+#### COMPONENT_REMOVED_FROM_PARENT
+
+
+#### Others are specific to certain components
+
+- BEFORE_CHANGE
+- SUBMIT_START
+- SUBMIT
+- RENDERER_CREATED
+- RENDERER_DESTROYED
+- BEFORE_CLOSE
+- CLOSE
+- PROPERTY_CHANGE
+
+
+### Mouse Events
+
+
+
+
+### Keyboard Events
+
+### Action Events
+
+
+## Pausing and resuming events
+
+You can pause event by using the function pauseEvent(type:String, recursive:Bool = false) {
+
+    resumeEvent(type:String, recursive:Bool = false) {
+
+## Creating you own custom events
+
+
+
+
+
