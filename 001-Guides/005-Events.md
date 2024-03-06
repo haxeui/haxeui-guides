@@ -10,7 +10,7 @@ There are many types of events, here are a few examples:
 - it can be keyboard event, something has been typed
 - and many others
 
-Haxe-ui provides multiple easy ways to listen to these events. 
+Haxe-ui provides multiple easy ways to listen to these events.
 
 ## Listening to events
 
@@ -39,7 +39,7 @@ c0.registerEvent("click", function(event:haxe.ui.events.UIEvent) {
 });
 ```
 
-What does it teaches us  ?
+What does it teach us  ?
 
 First thing, to listen to an event, you just have to know the event name, and do `on`+ the name of the event type.
 `onclick`, `onClick`, `onCLICK` all work.
@@ -102,7 +102,7 @@ function onClickButton(_) {
 }
 ```
 
-This brings on to the registerEvent method 
+This brings on to the registerEvent method
 
 #### Using the register event method
 
@@ -117,11 +117,11 @@ registerEvent<T:UIEvent>(type:EventType<T>, listener:T->Void, priority:Int = 0)
 Using directly the function enables us to set the priority parameter which is useful when registering multiple time the same events
 
 ```haxe
-registerEvent(haxe.ui.events.MouseEvent.CLICK, function(e){trace("written second");}, 88);
-registerEvent(haxe.ui.events.MouseEvent.CLICK, function(e){trace("written first");}, 888);
+registerEvent(haxe.ui.events.MouseEvent.CLICK, function(e){ trace("written second"); }, 88);
+registerEvent(haxe.ui.events.MouseEvent.CLICK, function(e){ trace("written first"); }, 888);
 ```
 
-Or to make an event happen before the default haxui behaviour.
+Or to make an event happen before the default haxeui behaviour.
 
 The bigger the number, the higher the priority.
 
@@ -133,13 +133,13 @@ registerEvent(haxe.ui.events.MouseEvent.CLICK, doStuff, 888);
 unregisterEvent(haxe.ui.events.MouseEvent.CLICK, doStuff);
 ```
 
-You don't  need to unregister events. *Events are automatically unregistered when the components are destroyed.*
+You don't need to unregister events. *Events that are attached to components are automatically unregistered when the components are destroyed.*
 
-But if you only use once the type of event, and want to register and unregister multiple times a function, better to use a convenience property.
+But if you only use once the type of event, and want to register and unregister multiple times a function, better to use a convenience variable.
 
-#### Using the convenience properties
+#### Using the convenience variables
 
-Components have convenience properties for most used events.
+Components have convenience pvariables for most used events.
 
 `onChange`
 
@@ -166,10 +166,9 @@ onClick = function(e) {
     }
 }
 
-
 ```
 
-#### Overriding functions 
+#### Overriding functions
 
 
 There is also another way to change default events of a component.
@@ -241,16 +240,119 @@ A `resize` event is dispatched when the value of the component has been resized.
 
 ### Keyboard Events
 
+You don't attach keyboard events to a component but to a screen instance.
+That's why you musn't forget to unregister it
+
+```haxe
+function shortcut (e) {
+// function
+}
+Screen.instance.registerEvent(KeyboardEvent.PRESS, shortcut)
+
+registerEvent(UIEvent.DESTROY, function f(e) {
+    Screen.instance.unregisterEvent(KeyboardEvent.PRESS, shortcut)
+});
+```
+
+
 ### Action Events
 
+Action events are a way to separate the intention of the event from the source of it.
+
+It works a little differently than other events.
+There are only two types
+```haxe
+ACTION_START // when the action starts
+ACTION_END   // when the action stops
+```
+
+For most actions, you only need to use `ACTION_START`.
+`ACTION_END` is mostly used by button release or keys up.
+
+
+
+Then you have to switch on the type of action to know which it was
+```haxe
+@:bind(this, ActionEvent.ACTION_START)
+private function onActionStart(event:ActionEvent) {
+    switch (event.action) {
+        case ActionType.DOWN:
+            goDown();
+        case ActionType.UP:
+            goUp();
+        case ActionType.LEFT:    
+            goLeft();
+        case ActionType.RIGHT:    
+            goRight();
+        case _:      
+    }
+}
+```
+
+
+For example, there are multiple action types
+```haxe
+    var PRESS = "actionPress";
+    var LEFT = "actionLeft";
+    var RIGHT = "actionRight";
+    var UP = "actionUp";
+    var DOWN = "actionDown";
+    var NEXT = "actionNext";
+    var PREVIOUS = "actionPrevious";
+    var BACK = "actionBack";
+    var OK = "actionOK";
+    var CONFIRM = "actionConfirm";
+    var CANCEL = "actionCancel";
+```
+
+
+These actions can be produced by multiple sources a keyboard, a keypad, a mouse, the buttons of a smartphone, a touchscreen etc. But all will send the correct action if they are registered and configured correctly.
+By default, only keyboards are configured and registered.
+
+There are multiple advantages of using action events.
+
+- having multiple sources for the same event
+- being able to configure the source as you wish. You can imagine, some keyboard players setting the wasd keyboard for example.
+- having these events attached to a component instead of the screen for keyboard events, it makes it easier to manage.
+
+### Repeating events
+
+Some actions can be considered repeated if they haven't ended.
+For example, if you do an `ActionType.DOWN` when typing the the down arrow. You usually want multiple events to dispatch even if you only pressed the down button once.
+
+The event will continue to dispatch until there's a `ACTION_END` that happens.
+
+In this case you can set up the `event.repeater` to `true`
+To control the interval between each dispatching of the event.
+You can use the `actionRepeatInterval` variable of the component.
+
+```haxe
+actionRepeatInterval = 100; // this is the default, it's in ms
+@:bind(this, ActionEvent.ACTION_START)
+private function onActionStart(event:ActionEvent) {
+    switch (event.action) {
+        case ActionType.DOWN:
+            goDown();
+            // If the user one ActionType.DOWN, by pressing the the key
+            // Every 100ms an event will be dispatched until the user release the key.
+            event.repeater = true;
+        case _:      
+    }
+}
+```
 
 ## Pausing and resuming events
 
-You can pause event by using the function pauseEvent(type:String, recursive:Bool = false) {
+You can pause event by using the function pauseEvent(type:String, recursive:Bool = false)
 
-    resumeEvent(type:String, recursive:Bool = false) {
+and resumeEvent(type:String, recursive:Bool = false)
 
-## Creating you own custom events
+## Cancelling events
+
+
+
+## Creating your own custom events
+
 
 
 
