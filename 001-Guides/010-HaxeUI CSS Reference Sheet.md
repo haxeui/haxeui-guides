@@ -176,6 +176,7 @@ descriptions come https://www.tutorialrepublic.com/css-reference/css3-properties
 | content-height             | height of the children inside the container                  |         |
 | image-rendering            | for openfl "pixelated"                                       |         |
 | layout                     | layout: classic  for steppers, <br />vertical for boxes , etc |         |
+| include-in-layout          | whether the `top` and `left` of the component can be modified by its parent layout |         |
 | pointer-events             |                                                              |         |
 | spacing                    | the spacing between the children                             |         |
 |                            |                                                              |         |
