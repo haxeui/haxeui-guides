@@ -145,6 +145,52 @@ Some descriptions come from https://www.tutorialrepublic.com/css-reference/css3-
 | word-spacing               |                                                             |
 | z-index                    |                                                             |
 
+
+## Functions
+
+
+
+|                |                         |                                                         |
+| -------------- | ----------------------- | ------------------------------------------------------- |
+| calc           | calc(string)            | Only works with hscript                                 |
+| min            | min([values])           |                                                         |
+| max            | max([values])           |                                                         |
+| clamp          | clamp( value, min, max) |                                                         |
+| platform-color | platform-color(color)   | Works only on hxwidgets                                 |
+| theme-icon     | theme-icon(image)       |                                                         |
+| theme-image    |                         |                                                         |
+| rgb            | rgb(red, green, blue)   |                                                         |
+| lookup         |                         | https://community.haxeui.org/t/haxeui-v1-5-released/467 |
+| darken         | darken(color, amount)   | http://haxeui.org/builder/?d7147a87                     |
+| lighten        | lighten(color, amount)  | ```border-color: darken($background-color, 75)<br />``` |
+
+You can also register your own functions in the module
+
+```xml
+    <cssExtensions>
+        <cssFunction name="random" call="custom.CssFunctions.random" />>
+    </cssExtensions>
+```
+
+
+
+
+
+## Filters 
+
+```xml
+<cssExtensions>    
+	<cssFilter name="blur" class="haxe.ui.filters.Blur" />
+    <cssFilter name="box-shadow" class="haxe.ui.filters.BoxShadow" />
+    <cssFilter name="drop-shadow" class="haxe.ui.filters.DropShadow" />
+    <cssFilter name="grayscale" class="haxe.ui.filters.Grayscale" />
+    <cssFilter name="outline" class="haxe.ui.filters.Outline" />
+    <cssFilter name="tint" class="haxe.ui.filters.Tint" />
+    <cssFilter name="contrast" class="haxe.ui.filters.Contrast" />
+    <cssFilter name="hue-rotate" class="haxe.ui.filters.HueRotate" />
+    <cssFilter name="saturate" class="haxe.ui.filters.Saturate" />
+</cssExtensions>
+```
 ## Border Styles
 
 It depends on the platform.
