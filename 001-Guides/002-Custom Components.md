@@ -261,3 +261,229 @@ In order to use this xml file you must allow HaxeUI to know about it, this can b
 This component class will now be available using both code and markup, when using via code it would be `custom.MyComponent` and when using via markup with would simply be `<mycomponent />`
 
 More information about this, and modules in general, can be found in the "Modules" sections
+
+
+
+## Useful metadata
+
+### @:composite
+
+Sometimes you need to create a component that works both in native and composite.
+
+In this case you use the `composite` metadata, to indicate which classes will be used only for composites
+
+
+
+```haxe
+@:composite(ButtonEvents, ButtonBuilder, ButtonLayout) 
+class Button extends InteractiveComponent implements ICompositeInteractiveComponent {
+    // this part will work both in native and composite backends
+}
+
+class ButtonEvents extends haxe.ui.events.Events {
+    // this class won't be used in native components
+    // where you register events
+    // you can access it with component._internalEvents
+}
+
+class ButtonBuilder extends CompositeBuilder {
+    // this class won't be used in native components
+    // how you create the component, how you add/remove children components
+    // you can access it with component._compositeBuilder
+}
+
+class ButtonLayout extends DefaultLayout {
+    // this class won't be used in native components
+    // how you reposition children
+    // you can access it with component._defaultLayout
+}
+```
+
+`@:composite(ButtonEvents, ButtonBuilder, ButtonLayout) `
+
+Translates to 
+
+```haxe
+function registerComposite() {
+	super.registerComposite();
+	this._internalEventsClass = haxe.ui.components.ButtonEvents;
+	this._compositeBuilderClass = haxe.ui.components.ButtonBuilder;
+	this._defaultLayoutClass = haxe.ui.components.ButtonLayout;
+}
+```
+
+
+
+
+
+### @:clonable
+
+ When the component is cloned, it also clones the value of the property
+
+It extremely useful if you use the component in an item renderer
+
+###  @:value(...)  
+
+Binds the value property to another property/variable
+
+```haxe
+@:clonable @:behaviour(SelectedBehaviour)               public var selected:Bool;
+@:clonable @:value(selected)                            public var value:Dynamic;
+```
+
+translates to
+
+```haxe
+function get_value() {
+    return this.get_selected();
+}
+
+function set_value(value:Dynamic) {
+    {
+        var _g = Type.typeof(value);
+        switch ((enumIndex _g)) {
+            case 1, 2: this.set_selected(value == 1);
+            case 6: if ((_g[0] == String)) this.set_selected(value == "true" || value == "1") else this.set_selected(value);
+            case 7: if ((_g[0] == haxe.ui.util.VariantType)) {
+                var v = value;
+                this.set_selected(@:implicitCast haxe.ui.util._Variant.Variant_Impl_.toBool(v));
+            } else this.set_selected(value);
+            default: this.set_selected(value)
+        };
+    };
+    return value;
+}
+```
+
+
+
+###  @:behaviour
+
+Behaviour is a same a get/set propery, except that 
+
+- it is used when the property has an influence on the visual of the component
+
+  it handles the validation/invalidation of the component
+
+- you can easily extend different type of behaviours
+
+- the behaviour won't be used in the native backend except if you replace it with another
+
+The behaviour of the class can be changed for a native backend
+
+```xml
+<native>
+    <component id="haxe.ui.components.DropDown" class="hx.widgets.Choice" allowChildren="false" creator="none">
+        <behaviour id="text" class="haxe.ui.backend.hxwidgets.behaviours.ChoiceSelectedLabel" />
+    </component>
+</native>
+```
+
+
+
+ ### @:call(...)  
+
+Call meta is the same @:behaviour except that it works for functions
+
+```haxe
+@:call(ClearNodes) public function clearNodes():Void;
+
+@:dox(hide) @:noCompletion
+private class ClearNodes extends Behaviour {
+    public override function call(param:Any = null):Variant {
+        var treeview:TreeView = cast(_component, TreeView);
+        treeview.selectedNode = null;
+        var nodes = treeview.findComponents(TreeViewNode, 3);
+        for (n in nodes) {
+            treeview.removeComponent(n);
+        }
+        return null;
+    }
+}
+```
+
+It can be changed for a native backend
+
+```xml
+<component id="haxe.ui.containers.TreeView" class="hx.widgets.DataViewTreeCtrl" constructor="$style">
+        <behaviour id="clearNodes" class="haxe.ui.backend.hxwidgets.behaviours.TreeViewClearNodes" />
+</component>
+```
+
+
+
+### @:event
+
+With `@:event` you can easily add an easy to set var, which works the same as `onChange`, `onClick`, etc
+
+```haxe
+@:event(ItemEvent.COMPONENT_EVENT)                                      public var onComponentEvent:ItemEvent->Void;
+```
+
+is transformed into
+
+```haxe    
+@:noCompletion
+var _internal__onComponentEvent:haxe.ui.events.ItemEvent -> Void;
+
+@:dox(group = "Event related properties and methods")
+public var onComponentEvent(null,set):haxe.ui.events.ItemEvent -> Void;
+
+function set_onComponentEvent(value:haxe.ui.events.ItemEvent -> Void) {
+    if ((this._internal__onComponentEvent != null)) {
+        this.unregisterEvent(haxe.ui.events.ItemEvent.COMPONENT_EVENT, this._internal__onComponentEvent);
+        this._internal__onComponentEvent = null;
+    };
+    if ((value != null)) {
+        this._internal__onComponentEvent = value;
+        this.registerEvent(haxe.ui.events.ItemEvent.COMPONENT_EVENT, value);
+    };
+    return value;
+}
+```
+
+
+
+### @:style
+
+Using style enable to easily get and set styles. It will also manage invalidation.
+
+`@:style`
+
+`@:style(layout) `  will invalidate the layout
+
+`@:style(layoutparent)` will invalidate the layoutparent
+
+
+
+```haxe
+@:style(layout)                                     public var textAlign:String;
+```
+
+will transform to
+
+```haxe
+	@:style @:keep @:dox(group = "Style properties")
+	public var textAlign(get,set):String;
+
+	function get_textAlign() {
+		if ((this.get_customStyle().textAlign != null)) return this.get_customStyle().textAlign;
+		if ((this.get_style() == null || this.get_style().textAlign == null)) return null;
+		return this.get_style().textAlign;
+	}
+
+	function set_textAlign(value:String) {
+		if ((this.get_customStyle().textAlign == value)) return value;
+		if ((this._style == null)) this._style = new haxe.ui.styles.Style(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+		if ((value == null)) this.get_customStyle().textAlign = null else this.get_customStyle().textAlign = value;
+		this.invalidateComponent(cast "style", false);
+        /** this part is added if you use @:style(layout) **/
+		if ((! (this._layout == null || this._layoutLocked == true))) this.invalidateComponent(cast "layout", false);
+        /** this part is added if you use @:style(parentLayout) **/
+        if ((this.get_parentComponent() != null)) {
+			var _this = this.get_parentComponent();
+			if ((! (_this._layout == null || _this._layoutLocked == true))) _this.invalidateComponent(cast "layout", false);
+		};
+		return value;
+	}
+```
