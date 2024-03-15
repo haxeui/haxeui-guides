@@ -110,6 +110,12 @@ The best way to achieve this is to mark all components as 100% - HaxeUI will the
 
 **Note**: you can also have fixed sized components there too, HaxeUI will calculate the sizes based on the *remaining* available space. 
 
+How styling works
+-----------------
+
+![](_assets/styling_schema_flow.png)
+
+
 Creating styles with CSS
 ------------------------
 
@@ -159,7 +165,7 @@ The two dotted selectors are separated by a space (**.component .child**). This 
 <vbox style="padding: 5px;">
     <style>
         .hbox .button {
-	    color: red;
+            color: red;
         }
     </style>
     <hbox>
@@ -353,28 +359,28 @@ You can still have a local scope using <style scope="local">
 
 ```xml
 <vbox style="padding: 5px;">
-<style>
-.dress {
-    background-color:red;
-}
-</style>
-<button text="I ordered a red dress but it seems yellow... I wonder why?" styleName="dress"/>
-<vbox>
-<style>
-.dress {
-    background-color:yellow;
-}
-</style>
-<button  text="Haha, I overrode your order! Yellow dresses for everyone!"  styleName="dress"/>
-</vbox>
-<vbox>
-<style scope="local">
-.dress {
-    background-color:aqua;
-}
-</style>
-<button text="I like to tailor my own dresses" styleName="dress"/>
-</vbox>
+    <style>
+    .dress {
+        background-color:red;
+    }
+    </style>
+	<button text="I ordered a red dress but it seems yellow... I wonder why?" styleName="dress"/>
+    <vbox>
+        <style>
+        .dress {
+            background-color:yellow;
+        }
+        </style>
+        <button  text="Haha, I overrode your order! Yellow dresses for everyone!"  styleName="dress"/>
+    </vbox>
+    <vbox>
+        <style scope="local">
+        .dress {
+            background-color:aqua;
+        }
+        </style>
+        <button text="I like to tailor my own dresses" styleName="dress"/>
+    </vbox>
 </vbox>
 ```
 
@@ -386,6 +392,16 @@ This is a way used in most examples in this guide. It enables quick prototyping,
 
 ```xml
 <button text="Click Me!" onclick="this.text='Thanks!'" style="font-size: 24px;" />
+```
+
+#### Modifying the style attribute with code
+
+The style attribute is directly coded into the `styleString` property.
+
+Which means you can also do this in code
+
+```haxe
+c.styleString = "font-size: 36px;";
 ```
 
 ### Using CSS in a separate file
@@ -400,7 +416,7 @@ You need to configure the path to the .css in the module.xml
 </themes>
 ```
 
-The advantages are that it easier to make themes. That you can use syntax highlighting etc in your ide.
+The advantages are that it easier to make themes. That you can use syntax highlighting etc in your IDE.
 
 ### Applying a CSS stylesheet via code
 

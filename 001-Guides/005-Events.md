@@ -185,7 +185,7 @@ public override function onReady() {
 
 You can also the same for  `onInitialize()`, `onResized()` and others depending on the component
 
-```
+
 
 ## Type of events
 
@@ -315,6 +315,18 @@ There are multiple advantages of using action events.
 - being able to configure the source as you wish. You can imagine, some keyboard players setting the wasd keyboard for example.
 - having these events attached to a component instead of the screen for keyboard events, it makes it easier to manage.
 
+
+
+Actions sources are added in the module
+
+```xml
+<actions>
+    <source class="haxe.ui.actions.KeyboardActionInputSource" />
+</actions>
+```
+
+
+
 ### Repeating events
 
 Some actions can be considered repeated if they haven't ended.
@@ -343,16 +355,15 @@ private function onActionStart(event:ActionEvent) {
 
 ## Pausing and resuming events
 
-You can pause event by using the function pauseEvent(type:String, recursive:Bool = false)
+You can pause event by using the function `pauseEvent(type:String, recursive:Bool = false)`
 
-and resumeEvent(type:String, recursive:Bool = false)
+and `resumeEvent(type:String, recursive:Bool = false)`
 
-## Cancelling events
+## Canceling events
 
 
 
 ## Creating your own custom events
-
 
 
 
